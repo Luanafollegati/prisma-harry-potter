@@ -1,5 +1,5 @@
 //é no model que fazemos a consulta para o banco de dados
-//ex: SELECT * FROM bruxos; porém estamos usando PRISMA 
+//ex: SELECT * FROM bruxos; porém estamos usando PRISMA
 //que abstrai o comando SQL
 
 //Importar prisma Client
@@ -7,16 +7,50 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const findAll = async () => {
-    //SELECT * FROM bruxos = findMany
-    return bruxos = await prisma.bruxo.findMany({
-        ordeBy: { nome: 'asc'}
+  //SELECT * FROM bruxos = findMany
+  return (bruxos = await prisma.bruxo.findMany({
+    ordeBy: { nome: "asc" },
+  }));
+};
+
+//crio a variavel findById e já exporto
+export const findById = async (id) => {
+  //SELECT * FROM bruxos WHERE id = 1;
+  return await prisma.bruxo.findUnique({
+    where: { id: Number(id) },
+  });
+};
+
+export const create = async (data) => {
+  return await prisma.bruxo.create({
+    data: {
+      nome: data.nome,
+      casa: data.casa,
+      patrono: data.patrono,
+      varinha: data.varinha,
+      anoMatricula,
+    },
+  });
+};
+
+
+export const deleteBruxo = async (id) => {
+    return await prisma.bruxo.delete({
+        where: { id: nunber (id)}
     })
 }
 
-//crio a variavel findById e já exporto
-export const findById =  async (id) => {
-    //SELECT * FROM bruxos WHERE id = 1;
-    return await prisma.bruxo.findUnique({
-        where: { id: Number(id) }
-    });
+
+export const update = async (id, data) => {
+    return await prisma.bruxo.update({
+        where: { id: Number(id) },
+        data: {
+            ...(data.nome && { nome: data.nome }),
+            ...(data.casa && { casa: data.casa }),
+            ...(data.patrono && { patrono: data.patrono }),
+            ...(data.varinha && { varinha: data.varinha }),
+            ...(data.anoMatricula && { anoMatricula: data.anoMatricula }),
+            ...(data.ativo !== undefined && { ativo: data.ativo }),
+        }
+    })
 }
