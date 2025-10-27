@@ -1,0 +1,5 @@
+1 - Instale as dependencias - npm i
+2 - Crie o arquivo . env - adicione  a variavel do banco
+3 - Crie o banco e aplique o shema - npx prisma migrate dev
+4 - Veja o banco - npx prisma studio
+5 - Execute o projeto - npx run dev
